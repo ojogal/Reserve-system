@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     namespace :vi do
       resources :users, only: %i[:show :create :update :destroy]
       resources :tokens, only: [:create]
+      resources :tables
     end
   end
 end
