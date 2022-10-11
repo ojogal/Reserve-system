@@ -4,20 +4,29 @@ class Api::V1::TablesController < ApplicationController
   before_action :check_login, only: %i[create]
   
   def index
-    render json: Table.all
+    @tables = Table.all
+    render json: Tableerializer.new(@tables).serializable_hash.to_json
   end
   
   def show
-    render json: Table.find(params[:id])
+    render json: TableSerializer.new(@table).serializable_hash.to_json
   end
 
   def create
     table = current_user.tables.build(table_params)
     
     if table.save
-      render json: table, status: :created
+      render json: TableSerializer.new(@tables).serializable_hash.to_json, status: :created
     else
       render json: { errors: table.errors }, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    if @table.update(user_params)
+      render json: TableSerializer.new(@table).serializable_hash.to_json
+    else
+      render json: @table.errors, status: :unprocessable_entity
     end
   end
 
