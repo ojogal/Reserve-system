@@ -5,11 +5,13 @@ class Api::V1::TablesController < ApplicationController
   
   def index
     @tables = Table.all
-    render json: Tableerializer.new(@tables).serializable_hash.to_json
+    options = { include: [:user] }
+    render json: Tableerializer.new(@tables, options).serializable_hash.to_json
   end
   
   def show
-    render json: TableSerializer.new(@table).serializable_hash.to_json
+    options = { include: [:user] }
+    render json: TableSerializer.new(@table, options).serializable_hash.to_json
   end
 
   def create
