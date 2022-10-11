@@ -6,7 +6,7 @@ class Api::V1::TablesController < ApplicationController
   def index
     @tables = Table.all
     options = { include: [:user] }
-    render json: Tableerializer.new(@tables, options).serializable_hash.to_json
+    render json: TableSerializer.new(@tables, options).serializable_hash.to_json
   end
   
   def show

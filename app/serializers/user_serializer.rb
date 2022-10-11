@@ -1,4 +1,6 @@
 class UserSerializer
   include JSONAPI::Serializer
-  attributes :emai
+
+  has_many :tables
+  attributes :email
 end

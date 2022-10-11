@@ -4,7 +4,8 @@ class Api::V1::UsersController < ApplicationController
 
 
   def show
-    render json: UserSerializer.new(@user).serializable_hash.to_json
+    options = { include: [:tables] }
+    render json: UserSerializer.new(@user, options).serializable_hash.to_json
   end
 
   def create
@@ -37,5 +38,9 @@ class Api::V1::UsersController < ApplicationController
 
   def check_owner
     head :forbidden unless @user.id == current_user&.id
+  end
+
+  def set_user
+    @user = User.find(params[:id])
   end
 end
